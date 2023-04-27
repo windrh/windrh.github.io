@@ -37,7 +37,21 @@
     transform: translateX(-50%);
     font-size: 48px;
     font-weight: bold;
-    color: black;
+    /* New styles below */
+    text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black; /* Add a thin black outline */
+    font-weight: 900; /* Make the letters fatter */
+    animation: color-change 5s infinite; /* Apply the color-change animation */
+  }
+ @keyframes color-change {
+    0% {
+      color: #ADD8E6;
+    }
+    50% {
+      color: #FFB6C1;
+    }
+    100% {
+      color: #ADD8E6;
+    }
   }
 
   .button {
@@ -61,31 +75,31 @@
     color: white;
   }
 
-  .button:nth-child(3) {
-    left: 30%;
+  .button:nth-child(4) {
+    left: calc(20% - 40px);
     transform: translateY(-50%);
   }
-
-  .button:nth-child(4) {
+  .button:nth-child(5) {
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
   }
 
-  .button:nth-child(5) {
-    left: calc(70% - 30%); /* Correct the left position */
+  .button:nth-child(6) {
+    left: calc(65% - 40px);
     transform: translateY(-50%);
   }
-
 
 </style>
 </head>
 <body>
+
 <div class="background-image"></div>
 <div class="overlay"></div>
 <h1 class="landing-title">WinDRH Landing Page</h1>
 <div class="button">Personal</div>
 <div class="button">Project/AICD</div>
 <div class="button">See More</div>
+
 <script>
   const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
 
@@ -117,4 +131,3 @@
 </script>
 </body>
 </html>
-
