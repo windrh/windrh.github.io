@@ -8,6 +8,7 @@
   body {
     margin: 0;
     font-family: Arial, sans-serif;
+    height: calc(100% + 500px);
   }
 
   .background-image {
@@ -74,6 +75,7 @@
 
     setTimeout(() => {
       circle.style.top = document.documentElement.clientHeight + 'px';
+      circle.style.left = circle.offsetLeft + (Math.random() * 200 - 100) + 'px';
       circle.style.opacity = 0;
     }, 50);
 
