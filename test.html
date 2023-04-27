@@ -61,23 +61,71 @@
 
   .button:nth-child(2) {
     top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .button:nth-child(3) {
     top: 55%;
+    left: 40%;
+    transform: translateX(-50%);
   }
 
   .button:nth-child(4) {
-    top: 65%;
+    top: 55%;
+    left: 60%;
+    transform: translateX(-50%);
+  }
+
+  .falling-circle {
+    position: absolute;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes fall {
+    0% {
+      opacity: 1;
+      transform: translateY(-10%);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(110%);
+    }
   }
 </style>
+<script>
+    function createFallingCircles() {
+    for (let i = 0; i < 30; i++) {
+      const circle = document.createElement('div');
+      const size = Math.random() * 20 + 5;
+      const posX = Math.random() * 100;
+      const delay = Math.random() * 5;
+      const duration = Math.random() * 10 + 5;
+      const color = ['rgba(255, 182, 193, 0.7)', 'rgba(173, 216, 230, 0.7)', 'rgba(255, 255, 255, 0.7)'][Math.floor(Math.random() * 3)];
+
+      circle.classList.add('falling-circle');
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+      circle.style.left = `${posX}vw`;
+      circle.style.animationDelay = `${delay}s`;
+      circle.style.animationDuration = `${duration}s`;
+      circle.style.backgroundColor = color;
+
+      document.body.appendChild(circle);
+    }
+  }
+</script>
 </head>
-<body>
-<div class="background-image"></div>
-<div class="overlay"></div>
-<h1 class="page-title">WinDRH Landing Page</h1>
-<div class="button" style="left: 50%; transform: translateX(-50%);">Project/AICD</div>
-<div class="button" style="left: 40%; transform: translateX(-50%);">Personal Profile</div>
-<div class="button" style="left: 60%; transform: translateX(-50%);">James Bond USB</div>
+<body onload="createFallingCircles()">
+  <div class="background-image"></div>
+  <div class="overlay"></div>
+  <h1 class="page-title">WinDRH Landing Page</h1>
+  <div class="button">Project/AICD</div>
+  <div class="button">Personal Profile</div>
+  <div class="button">James Bond USB</div>
 </body>
 </html>
+
+
