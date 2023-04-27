@@ -8,6 +8,7 @@
   body {
     margin: 0;
     overflow: hidden;
+    font-family: Arial, sans-serif;
   }
 
   .background-image {
@@ -27,25 +28,49 @@
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 1));
     z-index: -1;
   }
+
+  .title-box {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border: 2px solid black;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+
+  .title-box:hover {
+    border: none;
+    background: linear-gradient(90deg, rgba(173, 216, 230, 0.7), rgba(255, 182, 193, 0.7));
+    color: white;
+  }
 </style>
 </head>
 <body>
 <div class="background-image"></div>
 <div class="overlay"></div>
+<div class="title-box">Project: AICD</div>
 <script>
-  const colors = ['#FFB6C1', '#FF69B4', '#ADD8E6', '#0000CD', '#FFFFFF'];
-  
+  const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
+
   function createCircle() {
     const circle = document.createElement('div');
     circle.style.position = 'absolute';
     circle.style.borderRadius = '50%';
     circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    circle.style.width = '20px';
-    circle.style.height = '20px';
-    circle.style.top = '-20px';
+    const circleSize = Math.random() * 20 + 10;
+    circle.style.width = `${circleSize}px`;
+    circle.style.height = `${circleSize}px`;
+    circle.style.top = '-30px';
     circle.style.left = Math.random() * document.documentElement.clientWidth + 'px';
     circle.style.opacity = Math.random();
-    circle.style.transition = `all ${Math.random() * 5 + 2}s linear`;
+    circle.style.transition = `all ${Math.random() * 10 + 5}s linear`;
     document.body.appendChild(circle);
 
     setTimeout(() => {
@@ -55,7 +80,7 @@
 
     setTimeout(() => {
       document.body.removeChild(circle);
-    }, (Math.random() * 5000 + 7000));
+    }, (Math.random() * 10000 + 15000));
   }
 
   setInterval(createCircle, 500);
