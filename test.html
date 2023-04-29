@@ -37,83 +37,16 @@
     transform: translateX(-50%);
     font-size: 48px;
     font-weight: bold;
-    font-weight: 900; /* Make the letters fatter */
+    font-weight: 900;
     display: inline;
   }
 
   .landing-title span {
     display: inline-block;
-    text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black; /* Add a thin black outline */
-    background: linear-gradient(90deg, white, #FFB6C1, #ADD8E6);
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: color-change 5s infinite; /* Apply the color-change animation */
-  }
-  
-  @keyframes color-change {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+    text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+    color: white;
   }
 
-  /* Individual animations for each letter */
-  .landing-title span:nth-child(1) {
-    animation-duration: 4s;
-  }
-  .landing-title span:nth-child(2) {
-    animation-duration: 6s;
-  }
-  .landing-title span:nth-child(3) {
-    animation-duration: 5s;
-  }
-  .landing-title span:nth-child(4) {
-    animation-duration: 7s;
-  }
-  .landing-title span:nth-child(5) {
-    animation-duration: 6s;
-  }
-  .landing-title span:nth-child(6) {
-    animation-duration: 8s;
-  }
-  .landing-title span:nth-child(7) {
-    animation-duration: 5s;
-  }
-  .landing-title span:nth-child(8) {
-    animation-duration: 6s;
-  }
-  .landing-title span:nth-child(9) {
-    animation-duration: 7s;
-  }
-  .landing-title span:nth-child(10) {
-    animation-duration: 5s;
-  }
-  .landing-title span:nth-child(11) {
-    animation-duration: 4s;
-  }
-  .landing-title span:nth-child(12) {
-    animation-duration: 6s;
-  }
-  .landing-title span:nth-child(13) {
-    animation-duration: 7s;
-  }
-  .landing-title span:nth-child(14) {
-    animation-duration: 5s;
-  }
-  .landing-title span:nth-child(15) {
-    animation-duration: 8s;
-  }
-  .landing-title span:nth-child(16) {
-    animation-duration: 6s;
-  }
-  .landing-title span:nth-child(17) {
-    animation-duration: 4s;
-  }
   .button-container {
     position: absolute;
     top: 50%;
@@ -200,15 +133,19 @@
       document.body.removeChild(circle);
     }, (Math.random() * 10000 + 15000));
   }
+
   function setGradient() {
-  const gradientText = document.querySelectorAll('.landing-title span');
-  gradientText.forEach((span) => {
-    const gradient = `linear-gradient(90deg, white, ${colors[Math.floor(Math.random() * colors.length)]}, white)`;
-    span.style.backgroundImage = gradient;
-  });
-}
+    const gradientText = document.querySelectorAll('.landing-title span');
+    gradientText.forEach((span) => {
+      const gradient = `linear-gradient(90deg, white, ${colors[Math.floor(Math.random() * colors.length)]}, white)`;
+      span.style.backgroundImage = gradient;
+      span.style.webkitBackgroundClip = "text";
+      span.style.color = "transparent";
+    });
+  }
+
   setInterval(createCircle, 500);
-  setInterval(setGradient, 1000); // Adjust the interval duration if needed
+  setInterval(setGradient, 1000);
 </script>
 </body>
 </html>
