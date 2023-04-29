@@ -146,6 +146,9 @@
       span.style.backgroundClip = "text";
       span.style.color = "transparent";
       span.style.webkitTextFillColor = "transparent";
+      setTimeout(() => {
+        span.style.webkitTextFillColor = colors[Math.floor(Math.random() * colors.length)];
+      }, 500);
     });
   }
   setInterval(createCircle, 500);
