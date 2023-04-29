@@ -47,6 +47,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    transition: background-image 1s ease-in-out;
   }
 
 
@@ -140,15 +141,10 @@
   function setGradient() {
     const gradientText = document.querySelectorAll('.landing-title span');
     gradientText.forEach((span) => {
-      const gradient = `linear-gradient(90deg, white, ${colors[Math.floor(Math.random() * colors.length)]}, white)`;
+      const color1 = colors[Math.floor(Math.random() * colors.length)];
+      const color2 = colors[Math.floor(Math.random() * colors.length)];
+      const gradient = `linear-gradient(90deg, ${color1}, ${color2}, ${color1})`;
       span.style.backgroundImage = gradient;
-      span.style.webkitBackgroundClip = "text";
-      span.style.backgroundClip = "text";
-      span.style.color = "transparent";
-      span.style.webkitTextFillColor = "transparent";
-      setTimeout(() => {
-        span.style.webkitTextFillColor = colors[Math.floor(Math.random() * colors.length)];
-      }, 500);
     });
   }
   setInterval(createCircle, 500);
