@@ -201,14 +201,12 @@
     }, (Math.random() * 10000 + 15000));
   }
   function setGradient() {
-    const gradientText = document.querySelectorAll('.landing-title span');
-    gradientText.forEach((span) => {
-      const gradient = `linear-gradient(90deg, white, ${colors[Math.floor(Math.random() * colors.length)]})`;
-      span.style.backgroundImage = gradient;
-    });
-  }
-
-
+  const gradientText = document.querySelectorAll('.landing-title span');
+  gradientText.forEach((span) => {
+    const gradient = `linear-gradient(90deg, white, ${colors[Math.floor(Math.random() * colors.length)]}, white)`;
+    span.style.backgroundImage = gradient;
+  });
+}
   setInterval(createCircle, 500);
   setInterval(setGradient, 1000); // Adjust the interval duration if needed
 </script>
