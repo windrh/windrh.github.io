@@ -44,8 +44,11 @@
   .landing-title span {
     display: inline-block;
     text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
-    color: white;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
+
 
   .button-container {
     position: absolute;
@@ -140,6 +143,7 @@
       const gradient = `linear-gradient(90deg, white, ${colors[Math.floor(Math.random() * colors.length)]}, white)`;
       span.style.backgroundImage = gradient;
       span.style.webkitBackgroundClip = "text";
+      span.style.backgroundClip = "text";
       span.style.color = "transparent";
     });
   }
