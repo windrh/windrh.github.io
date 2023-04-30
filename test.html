@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WinDRH Landing Page</title>
 <style>
+  @keyframes colorChange {
+    0% { color: #FFB6C1; }
+    33% { color: #ADD8E6; }
+    66% { color: #FFFFFF; }
+    100% { color: #FFB6C1; }
+  }
+
   body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -44,7 +51,7 @@
   .landing-title span {
     display: inline-block;
     text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
-    color: transparent;
+    animation: colorChange 6s infinite;
   }
 
   .button-container {
@@ -133,12 +140,6 @@
     }, (Math.random() * 10000 + 15000));
   }
 
-  function setGradient() {
-    const gradientText = document.querySelectorAll('.landing-title span');
-    gradientText.forEach((span) => {
-      const initialColor = colors[Math.floor(Math.random() * colors.length)];
-      const nextColor = colors[Math.floor(Math.random() * colors.length)];
-
       span.animate(
         [
           { color: initialColor },
@@ -153,7 +154,6 @@
   }
 
   setInterval(createCircle, 500);
-  setInterval(setGradient, 2000);
 </script>
 </body>
 </html>
