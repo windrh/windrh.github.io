@@ -6,21 +6,24 @@
 <title>WinDRH Landing Page</title>
 <style>
   
-  @keyframes colorWave {
-    0% {
+  @keyframes colorWave1 {
+    0%, 100% {
       background-position-x: 0%;
     }
-    100% {
+    50% {
       background-position-x: 100%;
     }
   }
 
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    height: calc(100% + 10000px);
-    overflow-x: hidden;
+  @keyframes colorWave2 {
+    0%, 100% {
+      background-position-x: 100%;
+    }
+    50% {
+      background-position-x: 0%;
+    }
   }
+
 
   .background-image {
     position: fixed;
@@ -58,12 +61,17 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: colorWave 8s ease infinite;
   }
 
+  .landing-title span:nth-child(odd) {
+    animation: colorWave1 8s ease infinite;
+  }
 
+  .landing-title span:nth-child(even) {
+    animation: colorWave2 8s ease infinite;
+  }
 
-
+  
   .button-container {
     position: absolute;
     top: 50%;
