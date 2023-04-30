@@ -8,16 +8,10 @@
   
   @keyframes colorWave {
     0% {
-      color: #ADD8E6;
-    }
-    33% {
-      color: #FFB6C1;
-    }
-    66% {
-      color: #FFFFFF;
+      background-position-x: 0%;
     }
     100% {
-      color: #ADD8E6;
+      background-position-x: 100%;
     }
   }
 
@@ -59,11 +53,14 @@
 
   .landing-title span {
     display: inline-block;
-    text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
-    color: #ADD8E6;
-    animation: colorWave 2s infinite;
-    animation-timing-function: linear;
+    background-image: linear-gradient(to right, #FFB6C1, #ADD8E6, #FFFFFF);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: colorWave 4s ease infinite;
   }
+
 
 
   .button-container {
