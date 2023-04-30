@@ -146,19 +146,6 @@
     }, (Math.random() * 10000 + 15000));
   }
 
-      span.animate(
-        [
-          { color: initialColor },
-          { color: nextColor },
-        ],
-        {
-          duration: 2000,
-          fill: 'forwards',
-        }
-      );
-    });
-  }
-  
   function applyWaveAnimation() {
     const gradientText = document.querySelectorAll('.landing-title span');
     gradientText.forEach((span, index) => {
