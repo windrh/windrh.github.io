@@ -54,11 +54,12 @@
   .landing-title span {
     display: inline-block;
     background-image: linear-gradient(to right, #FFB6C1, #ADD8E6, #FFFFFF);
-    background-size: 300% 100%;
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+
 
   .button-container {
     position: absolute;
@@ -151,11 +152,11 @@
     gradientText.forEach((span, index) => {
       const animation = span.animate(
         [
-          { backgroundPositionX: '0%' },
-          { backgroundPositionX: '300%' },
+          { backgroundPositionX: '-50%' },
+          { backgroundPositionX: '350%' },
         ],
         {
-          duration: 6000,
+          duration: 10000,
           delay: index * 50,
           fill: 'both',
           iterations: Infinity,
