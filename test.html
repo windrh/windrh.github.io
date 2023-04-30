@@ -6,21 +6,15 @@
 <title>WinDRH Landing Page</title>
 <style>
   
-  @keyframes colorWave1 {
-    0%, 100% {
-      background-position-x: 0%;
+  @keyframes colorWave {
+    0% {
+      background-image: linear-gradient(to left, #FFB6C1 50%, #ADD8E6 50%);
     }
     50% {
-      background-position-x: 100%;
+      background-image: linear-gradient(to left, #ADD8E6 50%, #FFB6C1 50%);
     }
-  }
-
-  @keyframes colorWave2 {
-    0%, 100% {
-      background-position-x: 100%;
-    }
-    50% {
-      background-position-x: 0%;
+    100% {
+      background-image: linear-gradient(to left, #FFB6C1 50%, #ADD8E6 50%);
     }
   }
 
@@ -56,11 +50,11 @@
 
   .landing-title span {
     display: inline-block;
-    background-image: linear-gradient(to left, #FFB6C1, #ADD8E6);
     background-size: 200% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    animation: colorWave 8s ease infinite;
   }
 
   .landing-title span:nth-child(odd) {
