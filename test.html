@@ -5,11 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WinDRH Landing Page</title>
 <style>
-  @keyframes colorChange {
-    0% { color: #FFB6C1; }
-    33% { color: #ADD8E6; }
-    66% { color: #FFFFFF; }
-    100% { color: #FFB6C1; }
+  
+  @keyframes colorWave {
+    0% {
+      color: #ADD8E6;
+    }
+    33% {
+      color: #FFB6C1;
+    }
+    66% {
+      color: #FFFFFF;
+    }
+    100% {
+      color: #ADD8E6;
+    }
   }
 
   body {
@@ -51,8 +60,11 @@
   .landing-title span {
     display: inline-block;
     text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
-    animation: colorChange 6s infinite;
+    color: #ADD8E6;
+    animation: colorWave 2s infinite;
+    animation-timing-function: linear;
   }
+
 
   .button-container {
     position: absolute;
@@ -152,15 +164,15 @@
       );
     });
   }
+  
   function applyWaveAnimation() {
     const gradientText = document.querySelectorAll('.landing-title span');
     gradientText.forEach((span, index) => {
       span.style.animationDelay = `${index * 0.2}s`;
     });
   }
+
   applyWaveAnimation();
-
-
   setInterval(createCircle, 500);
 </script>
 </body>
