@@ -6,12 +6,6 @@
 <title>WinDRH Landing Page</title>
 <style>
   
-  body, h1 {
-    margin: 0;
-    padding: 0;
-  }
-
-  
   @keyframes colorWave {
     0% {
       background-image: linear-gradient(to left, #FFB6C1 50%, #ADD8E6 50%);
@@ -49,7 +43,6 @@
     left: 50%;
     transform: translateX(-50%);
     font-size: 48px;
-    font-weight: bold;
     font-weight: 900;
     display: inline;
     background-image: linear-gradient(to right, #ADD8E6, #FFB6C1);
@@ -59,16 +52,6 @@
     text-shadow: 2px 2px 0 black, -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black;
   }
 
-
-  .landing-title span {
-    display: inline-block;
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: colorWave 8s ease infinite;
-  }
-  
   .button-container {
     position: absolute;
     top: 50%;
@@ -97,7 +80,7 @@
   }
 </style>
 </head>
-<body>
+  <body>
 
 <div class="background-image"></div>
 <div class="overlay"></div>
@@ -108,53 +91,5 @@
   <div class="button">See More</div>
 </div>
 
-<script>
-  const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
-
-  function createCircle() {
-    const circle = document.createElement('div');
-    circle.style.position = 'absolute';
-    circle.style.borderRadius = '50%';
-    circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    const circleSize = Math.random() * 20 + 10;
-    circle.style.width = `${circleSize}px`;
-    circle.style.height = `${circleSize}px`;
-    circle.style.top = Math.random() * document.documentElement.clientHeight + 'px';
-    circle.style.left = Math.random() * document.documentElement.clientWidth + 'px';
-    circle.style.opacity = Math.random();
-    circle.style.transition = `all ${Math.random() * 10 + 5}s linear`;
-    document.body.appendChild(circle);
-    setTimeout(() => {
-      circle.style.top = document.documentElement.clientHeight + 'px';
-      circle.style.left = circle.offsetLeft + (Math.random() * 200 - 100) + 'px';
-      circle.style.opacity = 0;
-    }, 50);
-
-    setTimeout(() => {
-      document.body.removeChild(circle);
-    }, (Math.random() * 10000 + 15000));
-  }
-
-  function applyWaveAnimation() {
-    const gradientText = document.querySelectorAll('.landing-title span');
-    gradientText.forEach((span, index) => {
-      const animation = span.animate(
-        [
-          { backgroundPositionX: '-50%' },
-          { backgroundPositionX: '350%' },
-        ],
-        {
-          duration: 10000,
-          delay: index * 50,
-          fill: 'both',
-          iterations: Infinity,
-        }
-      );
-    });
-  }
-
-  applyWaveAnimation();
-  setInterval(createCircle, 500);
-</script>
 </body>
 </html>
