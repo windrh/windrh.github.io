@@ -32,7 +32,7 @@ body {
   height: 12%;
   background: rgba(43, 43, 43, 0.9);
   z-index: 1;
-  border-bottom: 1px solid white; /* added a border at the bottom */
+  border-bottom: 1px solid white;
 }
 
 .bottom-box {
@@ -41,10 +41,19 @@ body {
   left: 0;
   width: 100%;
   height: 50%;
-  background: linear-gradient(rgba(43, 43, 43, 0), rgba(43, 43, 43, 1)); /* Changed to gradient */
+  background: linear-gradient(rgba(43, 43, 43, 0), rgba(43, 43, 43, 1));
   z-index: 1;
 }
 
+.extra-space {
+  position: fixed;
+  bottom: -100%; /* Adjust this value to change the amount of extra space */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(43, 43, 43, 1); /* Solid color */
+  z-index: 1;
+}
 
 .landing-title {
   margin-left: 2%;
@@ -67,11 +76,11 @@ body {
 }
 
 .button {
-  padding: 1% 2%; /* Decreased the padding */
+  padding: 1.5% 3.5%;
   border: 4px solid black;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  font-size: 2em; /* Decreased the font size */
+  font-size: 2.5em;
   font-weight: bold;
   color: black;
   transition: all 0.2s ease-in-out;
@@ -102,7 +111,8 @@ body {
   </div>
 </div>
 <div class="bottom-box"></div>
-  
+<div class="extra-space"></div> <!-- Added this new div for the extra space -->
+
 <script>
   const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
 
@@ -134,4 +144,6 @@ body {
 </script>
 </body>
 </html>
+
+
 
