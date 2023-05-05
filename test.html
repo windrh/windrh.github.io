@@ -97,25 +97,25 @@
 <div class="bottom-box"></div>
 
 <script>
-  <script>
+   <script>
   const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
 
   function createCircle() {
     const circle = document.createElement('div');
-    circle.style.position = 'absolute';
+    circle.style.position = 'fixed';
     circle.style.borderRadius = '50%';
     circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
     const circleSize = Math.random() * 20 + 10;
     circle.style.width = `${circleSize}px`;
     circle.style.height = `${circleSize}px`;
-    circle.style.top = Math.random() * document.documentElement.clientHeight + 'px';
-    circle.style.left = Math.random() * document.documentElement.clientWidth + 'px';
+    circle.style.top = Math.random() * window.innerHeight + 'px';
+    circle.style.left = Math.random() * window.innerWidth + 'px';
     circle.style.opacity = Math.random();
     circle.style.transition = `all ${Math.random() * 10 + 5}s linear`;
     document.body.appendChild(circle);
+
     setTimeout(() => {
-      circle.style.top = document.documentElement.clientHeight + 'px';
-      circle.style.left = circle.offsetLeft + (Math.random() * 200 - 100) + 'px';
+      circle.style.transform = `translateY(${window.innerHeight - circle.offsetTop}px)`;
       circle.style.opacity = 0;
     }, 50);
 
@@ -128,4 +128,3 @@
 </script>
 </body>
 </html>
-
