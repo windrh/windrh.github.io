@@ -40,9 +40,19 @@
     background-image: linear-gradient(to right, #ADD8E6, #FFB6C1);
     -webkit-background-clip: text;
     color: transparent;
+    z-index; 1;
   }
 
-
+  .black-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%; /* Adjust as needed */
+    height: 80%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+    z-index: 0;
+  }
 
   .button-container {
     position: absolute;
@@ -78,7 +88,7 @@
 <body>
 
 <div class="background-image"></div>
-<div class="overlay"></div>
+<div class="black-overlay"></div> <!-- New Code: Black box overlay -->
 <h1 class="landing-title">Project Links</h1>
 <div class="button-container">
   <div class="button">Personal</div>
