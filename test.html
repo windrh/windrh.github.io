@@ -36,23 +36,25 @@ body {
 }
 
 .bottom-box {
-  position: relative; /* Changed from fixed to relative */
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 50%;
-  background: linear-gradient(to bottom, rgba(43, 43, 43, 0), rgba(43, 43, 43, 1));
+  background: linear-gradient(rgba(43, 43, 43, 0), rgba(43, 43, 43, 1));
+  z-index: 1;
 }
 
 .extra-space {
-  position: relative; /* Changed from fixed to relative */
+  position: fixed;
+  bottom: -100%; /* Adjust this value to change the amount of extra space */
+  left: 0;
   width: 100%;
-  height: 500px; /* Adjust this value to add more or less space */
-  background: #2B2B2B;
+  height: 100%;
+  background: rgba(43, 43, 43, 1); /* Solid color */
+  z-index: 1;
 }
 
- .clear {
-  clear: both;
-}
-  
 .landing-title {
   margin-left: 2%;
   font-size: 36px;
@@ -109,8 +111,7 @@ body {
   </div>
 </div>
 <div class="bottom-box"></div>
-<div class="extra-space"></div>
- <div class="clear"></div>
+<div class="extra-space"></div> <!-- Added this new div for the extra space -->
 
 <script>
   const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
@@ -143,6 +144,3 @@ body {
 </script>
 </body>
 </html>
-
-
-
