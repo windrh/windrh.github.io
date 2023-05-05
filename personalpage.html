@@ -41,6 +41,7 @@ body {
   background: rgba(43, 43, 43, 0.9);
   z-index: 1;
   border-bottom: 1px solid white;
+  padding-left: 1%; /* This adds padding to the whole header */
 }
 
 .bottom-box {
@@ -63,8 +64,12 @@ body {
   z-index: 1;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
 .landing-title {
-  margin-left: 1%; /* Decreased margin-left from 2% to 1% */
   font-size: 36px;
   font-weight: 900;
   font-family: 'Roboto', sans-serif;
@@ -72,7 +77,23 @@ body {
   background-image: linear-gradient(to right, #ADD8E6, #FFB6C1);
   -webkit-background-clip: text;
   color: transparent;
-  padding-left: 20px; /* Added padding-left to separate WIN from DRH */
+}
+
+.title-line {
+  height: 70%;
+  width: 2px;
+  background: black;
+  border: 1px solid white;
+  margin: 0 20px;
+}
+
+.title-subtext {
+  font-size: 36px;
+  font-weight: 900;
+  -webkit-text-stroke: 2.5px white;
+  background-image: linear-gradient(to right, #ADD8E6, #FFB6C1);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 .button-container {
@@ -101,31 +122,6 @@ body {
   background: linear-gradient(90deg, rgba(173, 216, 230, 0.7), rgba(255, 182, 193, 0.7));
   color: white;
 }
-  
-.title-text, .title-subtext {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.title-line {
-    display: inline-block;
-    height: 70%; // adjust this value as needed
-    width: 2px;
-    background: black;
-    border: 1px solid white;
-    margin: 0 20px;
-    vertical-align: middle;
-}
-
-.title-subtext {
-    font-size: 36px;
-    font-weight: 900;
-    -webkit-text-stroke: 2.5px white;
-    background-image: linear-gradient(to right, #ADD8E6, #FFB6C1);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
 </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -135,12 +131,14 @@ body {
 
 <div class="background-image"></div>
 <div class="header">
-  <h1 class="landing-title">
-    <span class="title-text">WIN</span><br>DRH
+  <div class="title-container">
+    <h1 class="landing-title">WIN</h1>
     <div class="title-line"></div>
-    <span class="title-subtext">Personal Page</span>
-</h1>
-<div class="button-container">
+    <h1 class="landing-title">DRH</h1>
+    <div class="title-line"></div>
+    <h1 class="title-subtext">Personal Page</h1>
+  </div>
+  <div class="button-container">
     <a href="https://github.com/windrh" target="_blank">
       <div class="button">Github</div>
     </a>
@@ -153,7 +151,7 @@ body {
   </div>
 </div>
 <div class="bottom-box"></div>
-<div class="extra-space"></div> <!-- Added this new div for the extra space -->
+<div class="extra-space"></div>
 
 <script>
   const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
