@@ -21,14 +21,25 @@
     z-index: -1;
   }
 
-    .top-box {
+  .top-box {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 10%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 75%, transparent 100%);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
+    overflow: hidden;
+  }
+
+  .top-box::after {
+    content: "";
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   }
 
   .bottom-box {
@@ -37,25 +48,37 @@
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(to top, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 75%, transparent 100%);
+    background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
+    overflow: hidden;
+  }
+
+  .bottom-box::before {
+    content: "";
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
   }
 
   .button-container {
-    position: sticky;
-    top: calc(10% + 50px);
+    position: fixed;
+    top: calc(10% + 30px);  /* Lower value will move the buttons higher */
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: space-between;
     width: 80%;
+    z-index: 2;
   }
 
   .landing-title {
-    position: sticky;
-    top: calc(10% / 2);
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    position: fixed;
+    top: 50%;
+    left: 2%;  /* 2% gap from the left edge of the screen */
+    transform: translateY(-50%);
     font-size: 60px;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
@@ -64,7 +87,7 @@
     background-image: linear-gradient(to right, #ADD8E6, #FFB6C1);
     -webkit-background-clip: text;
     color: transparent;
-    z-index: 1;
+    z-index: 2;
   }
 
 
@@ -86,49 +109,50 @@
     color: white;
   }
 </style>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="background-image"></div>
+<div class="top-box"></div>
+<div class="bottom-box"></div>
 <h1 class="landing-title">WIN<br>DRH</h1>
 <div class="button-container">
-  <div class="button">Personal</div>
-  <div class="button">Project/AICD</div>
-  <div class="button">See More</div>
+    <div class="button">Personal</div>
+    <div class="button">Project/AICD</div>
+    <div class="button">See More</div>
 </div>
 
 <script>
-  const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
+    const colors = ['#FFB6C1', '#ADD8E6', '#FFFFFF'];
 
-  function createCircle() {
-    const circle = document.createElement('div');
-    circle.style.position = 'fixed';
-    circle.style.borderRadius = '50%';
-    circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    const circleSize = Math.random() * 20 + 10;
-    circle.style.width = `${circleSize}px`;
-    circle.style.height = `${circleSize}px`;
-    circle.style.top = Math.random() * window.innerHeight + 'px';
-    circle.style.left = Math.random() * window.innerWidth + 'px';
-    circle.style.opacity = Math.random();
-    circle.style.transition = `all ${Math.random() * 10 + 5}s linear`;
-    document.body.appendChild(circle);
-    setTimeout(() => {
-      circle.style.top = window.innerHeight + 'px';
-      circle.style.left = circle.offsetLeft + (Math.random() * 200 - 100) + 'px';
-      circle.style.opacity = 0;
-    }, 50);
+    function createCircle() {
+        const circle = document.createElement('div');
+        circle.style.position = 'fixed';
+        circle.style.borderRadius = '50%';
+        circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        const circleSize = Math.random() * 20 + 10;
+        circle.style.width = `${circleSize}px`;
+        circle.style.height = `${circleSize}px`;
+        circle.style.top = Math.random() * window.innerHeight + 'px';
+        circle.style.left = Math.random() * window.innerWidth + 'px';
+        circle.style.opacity = Math.random();
+        circle.style.transition = `all ${Math.random() * 10 + 5}s linear`;
+        document.body.appendChild(circle);
+        setTimeout(() => {
+            circle.style.top = window.innerHeight + 'px';
+            circle.style.left = circle.offsetLeft + (Math.random() * 200 - 100) + 'px';
+            circle.style.opacity = 0;
+        }, 50);
 
-    setTimeout(() => {
-      document.body.removeChild(circle);
-    }, (Math.random() * 10000 + 15000));
-  }
+        setTimeout(() => {
+            document.body.removeChild(circle);
+        }, (Math.random() * 10000 + 15000));
+    }
 
-  setInterval(createCircle, 500);
+    setInterval(createCircle, 500);
 </script>
 </body>
 </html>
-
