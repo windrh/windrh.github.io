@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circle Background</title>
+<style>
+  body {
+    margin: 0;
+    background-color: white;
+  }
+  canvas {
+    display: block;
+  }
+  .circle {
+    position: absolute;
+  }
+</style>
+</head>
+<body>
+<canvas id="circleCanvas"></canvas>
+<script>
+  const canvas = document.getElementById("circleCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const resizeCanvas = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  class Circle {
+    constructor(x, y, radius, color) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.color = color;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+  }
+
+  const generateCircles = (count) => {
+    const circles = [];
+    for (let i = 0; i < count; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const size = Math.random();
+      let radius, color;
+      if (size < 0.25) {
+        radius = 10;
+        color = "black";
+      } else if (size < 0.5) {
+        radius = 20;
+        color = "rgba(0, 0, 0, 0.7)";
+      } else if (size < 0.75) {
+        radius = 30;
+        color = "grey";
+      } else {
+        radius = 40;
+        color = "rgba(128, 128, 128, 0.7)";
+      }
+      circles.push(new Circle(x, y, radius, color));
+    }
+    return circles;
+  };
+
+  const connectCircles = (circles) => {
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+    for (let i = 0; i < circles.length; i++) {
+      for (let j = i + 1; j < circles.length; j++) {
+        ctx.beginPath();
+        ctx.moveTo(circles[i].x, circles[i].y);
+        ctx.lineTo(circles[j].x, circles[j].y);
+        ctx.stroke();
+      }
+    }
+  };
+
+  const draw = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const circles = generateCircles(100);
+    for (const circle of circles) {
+      circle.draw();
+    }
+    connectCircles(circles);
+  };
+
+  draw();
+</script>
+</body>
+</html>
