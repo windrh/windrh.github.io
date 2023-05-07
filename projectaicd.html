@@ -118,13 +118,13 @@
         let radius, color;
         if (size < 0.25) {
           radius = 10;
-          color = "black";
+          color = "rgba(0, 0, 0, 1)";
         } else if (size < 0.5) {
           radius = 20;
           color = "rgba(0, 0, 0, 0.7)";
         } else if (size < 0.75) {
           radius = 30;
-          color = "grey";
+          color = "rgba(128, 128, 128, 1)";
         } else {
           radius = 40;
           color = "rgba(128, 128, 128, 0.7)";
@@ -178,7 +178,7 @@
     const nearestNeighbors = findNearestNeighbors(circle, circles, 3);
     for (const neighbor of nearestNeighbors) {
       if (!signals.find(s => s.start === circle && s.end === neighbor) && !signals.find(s => s.start === neighbor && s.end === circle)) {
-        const signal = new Signal(Math.random(), Math.random() * 0.0075 + 0.0005); // Random position and slower speed
+        const signal = new Signal(Math.random(), Math.random() * 0.0025 + 0.0005); // Slower speed
         signals.push({ start: circle, end: neighbor, signal });
       }
     }
