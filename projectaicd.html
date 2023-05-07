@@ -67,7 +67,20 @@
     this.intensity = 0;
   }
 
-  updateIntensity(receivingSignal) {
+  updateIntensity(signals) {
+    let receivingSignal = false;
+    for (const s of signals) {
+      if (s.start === this || s.end === this) {
+        const distToStart = distance(this, s.start);
+        const distToEnd = distance(this, s.end);
+        const signalDist = s.signal.position * (distToStart + distToEnd);
+
+        if (signalDist >= distToStart - 10 && signalDist <= distToStart + 10) {
+          receivingSignal = true;
+          break;
+        }
+      }
+    }
     if (receivingSignal) {
       this.intensity = Math.min(this.intensity + 0.1, 1);
     } else {
@@ -173,6 +186,15 @@
 
   const animate = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (const circle of circles) {
+    circle.updateIntensity(signals);
+    circle.draw();
+  }
+
+  connectCircles(circles, 3, signals);
+  requestAnimationFrame(animate);
+};
 
   for (const circle of circles) {
     const receivingSignal = signals.some(
