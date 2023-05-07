@@ -84,12 +84,17 @@
     return neighbors;
   };
 
-  const connectCircles = (circles, n) => {
-    ctx.strokeStyle = "black";
+    const connectCircles = (circles, n, signalPosition) => {
     ctx.lineWidth = 2;
     for (const circle of circles) {
       const nearestNeighbors = findNearestNeighbors(circle, circles, n);
       for (const neighbor of nearestNeighbors) {
+        const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
+        gradient.addColorStop(signalPosition, "blue");
+        gradient.addColorStop(Math.max(signalPosition - 0.1, 0), "black");
+        gradient.addColorStop(Math.min(signalPosition + 0.1, 1), "black");
+
+        ctx.strokeStyle = gradient;
         ctx.beginPath();
         ctx.moveTo(circle.x, circle.y);
         ctx.lineTo(neighbor.x, neighbor.y);
@@ -98,16 +103,24 @@
     }
   };
 
-  const draw = () => {
+  const circles = generateCircles(100);
+
+  let signalPosition = 0;
+  const animate = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const circles = generateCircles(100);
     for (const circle of circles) {
       circle.draw();
     }
-    connectCircles(circles, 3);
+    connectCircles(circles, 3, signalPosition);
+    signalPosition += 0.01;
+    if (signalPosition > 1) {
+      signalPosition = 0;
+    }
+    requestAnimationFrame(animate);
   };
 
-  draw();
+  animate();
 </script>
 </body>
 </html>
+
