@@ -196,20 +196,7 @@
   requestAnimationFrame(animate);
 };
 
-  for (const circle of circles) {
-    const receivingSignal = signals.some(
-      (s) =>
-        (s.start === circle || s.end === circle) &&
-        s.signal.position > 0.45 &&
-        s.signal.position < 0.55 &&
-        s.signal.delay === 0
-    );
-    circle.updateIntensity(receivingSignal);
-    circle.draw();
-  }
-
-  connectCircles(circles, 3, signals);
-  requestAnimationFrame(animate);
+  
 };
 
 
