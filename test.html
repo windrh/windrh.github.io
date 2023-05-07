@@ -71,14 +71,28 @@
     return circles;
   };
 
-  const connectCircles = (circles) => {
+  const distance = (c1, c2) => {
+    return Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
+  };
+
+  const findNearestNeighbors = (circle, circles, n) => {
+    const neighbors = circles
+      .map((c) => ({ circle: c, distance: distance(circle, c) }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(1, n + 1)
+      .map((c) => c.circle);
+    return neighbors;
+  };
+
+  const connectCircles = (circles, n) => {
     ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-    for (let i = 0; i < circles.length; i++) {
-      for (let j = i + 1; j < circles.length; j++) {
+    ctx.lineWidth = 2;
+    for (const circle of circles) {
+      const nearestNeighbors = findNearestNeighbors(circle, circles, n);
+      for (const neighbor of nearestNeighbors) {
         ctx.beginPath();
-        ctx.moveTo(circles[i].x, circles[i].y);
-        ctx.lineTo(circles[j].x, circles[j].y);
+        ctx.moveTo(circle.x, circle.y);
+        ctx.lineTo(neighbor.x, neighbor.y);
         ctx.stroke();
       }
     }
@@ -90,7 +104,7 @@
     for (const circle of circles) {
       circle.draw();
     }
-    connectCircles(circles);
+    connectCircles(circles, 3);
   };
 
   draw();
