@@ -27,6 +27,27 @@
 <div class="overlay"></div>
 <canvas id="circleCanvas"></canvas>
 <script>
+  class Signal {
+  constructor(position, speed) {
+    this.position = position;
+    this.speed = speed;
+    this.delay = Math.floor(Math.random() * 100);
+  }
+
+  update() {
+    if (this.delay > 0) {
+      this.delay -= 1;
+    } else {
+      this.position += this.speed;
+      if (this.position > 1) {
+        this.position = 0;
+        this.delay = Math.floor(Math.random() * 100);
+      }
+    }
+  }
+}
+
+  
   const canvas = document.getElementById("circleCanvas");
   const ctx = canvas.getContext("2d");
 
