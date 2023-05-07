@@ -57,7 +57,23 @@
     constructor(position, speed) {
       this.position = position;
       this.speed = speed;
+      this.delay = 0;
     }
+
+    update() {
+      if (this.delay > 0) {
+        this.delay--;
+        return;
+      }
+
+      this.position += this.speed;
+      if (this.position > 1) {
+        this.position = 0;
+        this.delay = Math.floor(Math.random() * 200 + 100); // Random delay between 100 and 300 frames
+      }
+    }
+  }
+
 
     update() {
       this.position += this.speed;
