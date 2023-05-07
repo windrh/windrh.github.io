@@ -38,41 +38,42 @@
   resizeCanvas();
 
   class Circle {
-    constructor(x, y, radius, color) {
-      this.x = x;
-      this.y = y;
-      this.radius = radius;
-      this.color = color;
-    }
+  constructor(x, y, radius, color) {
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.color = color;
+    this.intensity = 0;
+  }
 
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      ctx.fillStyle = this.color;
-      ctx.fill();
+  updateIntensity(receivingSignal) {
+    if (receivingSignal) {
+      this.intensity = Math.min(this.intensity + 0.1, 1);
+    } else {
+      this.intensity = Math.max(this.intensity - 0.1, 0);
     }
   }
 
-  class Signal {
-    constructor(position, speed) {
-      this.position = position;
-      this.speed = speed;
-      this.delay = 0;
-    }
-
-    update() {
-      if (this.delay > 0) {
-        this.delay--;
-        return;
-      }
-
-      this.position += this.speed;
-      if (this.position > 1) {
-        this.position = 0;
-        this.delay = Math.floor(Math.random() * 200 + 100); // Random delay between 100 and 300 frames
-      }
-    }
+  draw() {
+    const color = this.lightenColor(this.color, this.intensity);
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    ctx.fillStyle = color;
+    ctx.fill();
   }
+
+  lightenColor(color, intensity) {
+    const col = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/i.exec(color) || /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i.exec(color);
+    if (!col) {
+      return color;
+    }
+    const r = Math.min(parseInt(col[1]) + Math.floor(255 * intensity), 255);
+    const g = Math.min(parseInt(col[2]) + Math.floor(255 * intensity), 255);
+    const b = Math.min(parseInt(col[3]) + Math.floor(255 * intensity), 255);
+    const a = col[4] === undefined ? 1 : parseFloat(col[4]);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+}
 
     const generateCircles = (count) => {
       const circles = [];
@@ -150,13 +151,24 @@
   }
 
   const animate = () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const circle of circles) {
-      circle.draw();
-    }
-    connectCircles(circles, 3, signals);
-    requestAnimationFrame(animate);
-  };
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (const circle of circles) {
+    const receivingSignal = signals.some(
+      (s) =>
+        (s.start === circle || s.end === circle) &&
+        s.signal.position > 0.45 &&
+        s.signal.position < 0.55 &&
+        s.signal.delay === 0
+    );
+    circle.updateIntensity(receivingSignal);
+    circle.draw();
+  }
+
+  connectCircles(circles, 3, signals);
+  requestAnimationFrame(animate);
+};
+
 
   animate();
 </script>
