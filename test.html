@@ -11,13 +11,20 @@
   }
   canvas {
     display: block;
-  }
-  .circle {
     position: absolute;
+    z-index: 2;
+  }
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(43, 43, 43, 0.75);
+    z-index: 1;
   }
 </style>
 </head>
 <body>
+<div class="overlay"></div>
 <canvas id="circleCanvas"></canvas>
 <script>
   const canvas = document.getElementById("circleCanvas");
@@ -90,7 +97,7 @@
       const nearestNeighbors = findNearestNeighbors(circle, circles, n);
       for (const neighbor of nearestNeighbors) {
         const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
-        gradient.addColorStop(signalPosition, "blue");
+        gradient.addColorStop(signalPosition, "rgba(0, 191, 255, 1)"); // Light blue color
         gradient.addColorStop(Math.max(signalPosition - 0.1, 0), "black");
         gradient.addColorStop(Math.min(signalPosition + 0.1, 1), "black");
 
