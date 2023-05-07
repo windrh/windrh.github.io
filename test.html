@@ -74,39 +74,30 @@
     }
   }
 
-
-    update() {
-      this.position += this.speed;
-      if (this.position > 1) {
-        this.position = 0;
+    const generateCircles = (count) => {
+      const circles = [];
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const size = Math.random();
+        let radius, color;
+        if (size < 0.25) {
+          radius = 10;
+          color = "black";
+        } else if (size < 0.5) {
+          radius = 20;
+          color = "rgba(0, 0, 0, 0.7)";
+        } else if (size < 0.75) {
+          radius = 30;
+          color = "grey";
+        } else {
+          radius = 40;
+          color = "rgba(128, 128, 128, 0.7)";
+        }
+        circles.push(new Circle(x, y, radius, color));
       }
-    }
-  }
-
-  const generateCircles = (count) => {
-    const circles = [];
-    for (let i = 0; i < count; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const size = Math.random();
-      let radius, color;
-      if (size < 0.25) {
-        radius = 10;
-        color = "black";
-      } else if (size < 0.5) {
-        radius = 20;
-        color = "rgba(0, 0, 0, 0.7)";
-      } else if (size < 0.75) {
-        radius = 30;
-        color = "grey";
-      } else {
-        radius = 40;
-        color = "rgba(128, 128, 128, 0.7)";
-      }
-      circles.push(new Circle(x, y, radius, color));
-    }
-    return circles;
-  };
+      return circles;
+    };
 
   const distance = (c1, c2) => {
     return Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
@@ -117,11 +108,11 @@
       .map((c) => ({ circle: c, distance: distance(circle, c) }))
       .sort((a, b) => a.distance - b.distance)
       .slice(1, n + 1)
-      .map((c) => c.circle);
+      .map((item) => item.circle);
     return neighbors;
   };
 
-    const connectCircles = (circles, n, signals) => {
+  const connectCircles = (circles, n, signals) => {
     ctx.lineWidth = 2;
     for (const circle of circles) {
       const nearestNeighbors = findNearestNeighbors(circle, circles, n);
@@ -152,7 +143,7 @@
     const nearestNeighbors = findNearestNeighbors(circle, circles, 3);
     for (const neighbor of nearestNeighbors) {
       if (!signals.find(s => s.start === circle && s.end === neighbor) && !signals.find(s => s.start === neighbor && s.end === circle)) {
-        const signal = new Signal(Math.random(), Math.random() * 0.0015 + 0.0005); // Random position and speed
+        const signal = new Signal(Math.random(), Math.random() * 0.0015 + 0.0005); // Random position and slower speed
         signals.push({ start: circle, end: neighbor, signal });
       }
     }
@@ -172,3 +163,5 @@
 </body>
 </html>
 
+ 
+   
