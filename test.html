@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project AICD</title>
+<title>Circle Background</title>
 <style>
   body {
     margin: 0;
@@ -53,6 +53,20 @@
     }
   }
 
+  class Signal {
+    constructor(position, speed) {
+      this.position = position;
+      this.speed = speed;
+    }
+
+    update() {
+      this.position += this.speed;
+      if (this.position > 1) {
+        this.position = 0;
+      }
+    }
+  }
+
   const generateCircles = (count) => {
     const circles = [];
     for (let i = 0; i < count; i++) {
@@ -91,15 +105,20 @@
     return neighbors;
   };
 
-    const connectCircles = (circles, n, signalPosition) => {
+    const connectCircles = (circles, n, signals) => {
     ctx.lineWidth = 2;
     for (const circle of circles) {
       const nearestNeighbors = findNearestNeighbors(circle, circles, n);
       for (const neighbor of nearestNeighbors) {
+        const signal = signals.find(s => s.start === circle && s.end === neighbor) || signals.find(s => s.start === neighbor && s.end === circle);
+        if (!signal) {
+          continue;
+        }
+        signal.signal.update();
         const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
-        gradient.addColorStop(signalPosition, "rgba(0, 191, 255, 1)"); // Light blue color
-        gradient.addColorStop(Math.max(signalPosition - 0.1, 0), "black");
-        gradient.addColorStop(Math.min(signalPosition + 0.1, 1), "black");
+        gradient.addColorStop(signal.signal.position, "rgba(0, 191, 255, 1)"); // Light blue color
+        gradient.addColorStop(Math.max(signal.signal.position - 0.1, 0), "black");
+        gradient.addColorStop(Math.min(signal.signal.position + 0.1, 1), "black");
 
         ctx.strokeStyle = gradient;
         ctx.beginPath();
@@ -111,18 +130,24 @@
   };
 
   const circles = generateCircles(100);
+  const signals = [];
 
-  let signalPosition = 0;
+  for (const circle of circles) {
+    const nearestNeighbors = findNearestNeighbors(circle, circles, 3);
+    for (const neighbor of nearestNeighbors) {
+      if (!signals.find(s => s.start === circle && s.end === neighbor) && !signals.find(s => s.start === neighbor && s.end === circle)) {
+        const signal = new Signal(Math.random(), Math.random() * 0.02 + 0.005); // Random position and speed
+        signals.push({ start: circle, end: neighbor, signal });
+      }
+    }
+  }
+
   const animate = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (const circle of circles) {
       circle.draw();
     }
-    connectCircles(circles, 3, signalPosition);
-    signalPosition += 0.01;
-    if (signalPosition > 1) {
-      signalPosition = 0;
-    }
+    connectCircles(circles, 3, signals);
     requestAnimationFrame(animate);
   };
 
