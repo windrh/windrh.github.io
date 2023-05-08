@@ -27,6 +27,13 @@
 <div class="overlay"></div>
 <canvas id="circleCanvas"></canvas>
 <script>
+  
+  
+const findSameSizeNeighbors = (circle, circles, n) => {
+    const sameSizeCircles = circles.filter(c => c.radius === circle.radius);
+    return findNearestNeighbors(circle, sameSizeCircles, n);
+  };
+ 
   class Signal {
   constructor(position, speed) {
     this.position = position;
@@ -150,19 +157,14 @@
   const connectCircles = (circles, n, signals) => {
     ctx.lineWidth = 2;
     for (const circle of circles) {
-      const nearestNeighbors = findNearestNeighbors(circle, circles, n);
-      for (const neighbor of nearestNeighbors) {
+      const sameSizeNeighbors = findSameSizeNeighbors(circle, circles, n);
+      for (const neighbor of sameSizeNeighbors) {
         const signal = signals.find(s => s.start === circle && s.end === neighbor) || signals.find(s => s.start === neighbor && s.end === circle);
         if (!signal) {
           continue;
         }
         signal.signal.update();
-        const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
-        gradient.addColorStop(signal.signal.position, "rgba(0, 191, 255, 1)"); // Light blue color
-        gradient.addColorStop(Math.max(signal.signal.position - 0.1, 0), "black");
-        gradient.addColorStop(Math.min(signal.signal.position + 0.1, 1), "black");
-
-        ctx.strokeStyle = gradient;
+        ctx.strokeStyle = circle.color;
         ctx.beginPath();
         ctx.moveTo(circle.x, circle.y);
         ctx.lineTo(neighbor.x, neighbor.y);
@@ -170,13 +172,13 @@
       }
     }
   };
-
+  
   const circles = generateCircles(100);
   const signals = [];
 
   for (const circle of circles) {
-    const nearestNeighbors = findNearestNeighbors(circle, circles, 3);
-    for (const neighbor of nearestNeighbors) {
+    const sameSizeNeighbors = findSameSizeNeighbors(circle, circles, 3);
+    for (const neighbor of sameSizeNeighbors) {
       if (!signals.find(s => s.start === circle && s.end === neighbor) && !signals.find(s => s.start === neighbor && s.end === circle)) {
         const signal = new Signal(Math.random(), Math.random() * 0.0025 + 0.0005); // Slower speed
         signals.push({ start: circle, end: neighbor, signal });
@@ -185,16 +187,17 @@
   }
 
   const animate = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  for (const circle of circles) {
-    circle.updateIntensity(signals);
-    circle.draw();
-  }
+    connectCircles(circles, 3, signals); // Moved before the circle drawing loop
 
-  connectCircles(circles, 3, signals);
-  requestAnimationFrame(animate);
-};
+    for (const circle of circles) {
+      circle.updateIntensity(signals);
+      circle.draw();
+    }
+
+    requestAnimationFrame(animate);
+  };
 
   animate();
 </script>
