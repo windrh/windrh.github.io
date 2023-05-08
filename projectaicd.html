@@ -118,7 +118,7 @@ class Circle {
     ctx.fill();
   }
 
-    lightenColor(color, intensity) {
+  lightenColor(color, intensity) {
     const col = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/i.exec(color) || /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i.exec(color);
     if (!col) {
       return color;
@@ -130,6 +130,7 @@ class Circle {
     return `rgba(${r},${g},${b},${a})`;
   }
 }
+
 
 const generateCircles = (count) => {
   const circles = [];
