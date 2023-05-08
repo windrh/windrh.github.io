@@ -45,7 +45,8 @@ const resetCircles = () => {
 };
 
 resetCircles();
-  class Signal {
+
+class Signal {
   constructor(position, speed) {
     this.position = position;
     this.speed = speed;
@@ -65,27 +66,26 @@ resetCircles();
   }
 }
 
-  
-  const canvas = document.getElementById("circleCanvas");
-  const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("circleCanvas");
+const ctx = canvas.getContext("2d");
 
-  const resizeCanvas = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  };
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
+const resizeCanvas = () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+};
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
 
-  class Circle {
-  resetIntensity() {
-    this.intensity = 0;
-  }
-}
+class Circle {
   constructor(x, y, radius, color) {
     this.x = x;
     this.y = y;
     this.radius = radius;
     this.color = color;
+    this.intensity = 0;
+  }
+
+  resetIntensity() {
     this.intensity = 0;
   }
 
@@ -118,7 +118,7 @@ resetCircles();
     ctx.fill();
   }
 
-  lightenColor(color, intensity) {
+    lightenColor(color, intensity) {
     const col = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/i.exec(color) || /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/i.exec(color);
     if (!col) {
       return color;
@@ -131,100 +131,89 @@ resetCircles();
   }
 }
 
-    const generateCircles = (count) => {
-      const circles = [];
-      for (let i = 0; i < count; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const size = Math.random();
-        let radius, color;
-        if (size < 0.25) {
-          radius = 10;
-          color = "rgba(0, 0, 0, 1)";
-        } else if (size < 0.5) {
-          radius = 20;
-          color = "rgba(0, 0, 0, 0.7)";
-        } else if (size < 0.75) {
-          radius = 30;
-          color = "rgba(128, 128, 128, 1)";
-        } else {
-          radius = 40;
-          color = "rgba(128, 128, 128, 0.7)";
-        }
-        circles.push(new Circle(x, y, radius, color));
-      }
-      return circles;
-    };
-
-  const distance = (c1, c2) => {
-    return Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
-  };
-
-  const findNearestNeighbors = (circle, circles, n) => {
-    const neighbors = circles
-      .map((c) => ({ circle: c, distance: distance(circle, c) }))
-      .sort((a, b) => a.distance - b.distance)
-      .slice(1, n + 1)
-      .map((item) => item.circle);
-    return neighbors;
-  };
-
-  const connectCircles = (circles, n, signals) => {
-    ctx.lineWidth = 2;
-    for (const circle of circles) {
-      const nearestNeighbors = findNearestNeighbors(circle, circles, n);
-      for (const neighbor of nearestNeighbors) {
-        const signal = signals.find(s => s.start === circle && s.end === neighbor) || signals.find(s => s.start === neighbor && s.end === circle);
-        if (!signal) {
-          continue;
-        }
-        signal.signal.update();
-        const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
-        gradient.addColorStop(signal.signal.position, "rgba(0, 191, 255, 1)"); // Light blue color
-        gradient.addColorStop(Math.max(signal.signal.position - 0.1, 0), "black");
-        gradient.addColorStop(Math.min(signal.signal.position + 0.1, 1), "black");
-
-        ctx.strokeStyle = gradient;
-        ctx.beginPath();
-        ctx.moveTo(circle.x, circle.y);
-        ctx.lineTo(neighbor.x, neighbor.y);
-        ctx.stroke();
-      }
+const generateCircles = (count) => {
+  const circles = [];
+  for (let i = 0; i < count; i++) {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    const size = Math.random();
+    let radius, color;
+    if (size < 0.25) {
+      radius = 10;
+      color = "rgba(0, 0, 0, 1)";
+    } else if (size < 0.5) {
+      radius = 20;
+      color = "rgba(0, 0, 0, 0.7)";
+    } else if (size < 0.75) {
+      radius = 30;
+      color = "rgba(128, 128, 128, 1)";
+    } else {
+      radius = 40;
+      color = "rgba(128, 128, 128, 0.7)";
     }
-  };
+    circles.push(new Circle(x, y, radius, color));
+  }
+  return circles;
+};
 
-  const circles = generateCircles(100);
-  const signals = [];
+const distance = (c1, c2) => {
+  return Math.sqrt(Math.pow(c1.x - c2.x, 2) + Math.pow(c1.y - c2.y, 2));
+};
 
+const findNearestNeighbors = (circle, circles, n) => {
+  const neighbors = circles
+    .map((c) => ({ circle: c, distance: distance(circle, c) }))
+    .sort((a, b) => a.distance - b.distance)
+    .slice(1, n + 1)
+    .map((item) => item.circle);
+  return neighbors;
+};
+
+const connectCircles = (circles, n, signals) => {
+  ctx.lineWidth = 2;
   for (const circle of circles) {
-    const nearestNeighbors = findNearestNeighbors(circle, circles, 3);
+    const nearestNeighbors = findNearestNeighbors(circle, circles, n);
     for (const neighbor of nearestNeighbors) {
-      if (!signals.find(s => s.start === circle && s.end === neighbor) && !signals.find(s => s.start === neighbor && s.end === circle)) {
-        const signal = new Signal(Math.random(), Math.random() * 0.0025 + 0.0005); // Slower speed
-        signals.push({ start: circle, end: neighbor, signal });
+      const signal = signals.find(s => s.start === circle && s.end === neighbor) || signals.find(s => s.start === neighbor && s.end === circle);
+      if (!signal) {
+        continue;
       }
+      signal.signal.update();
+      const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
+      gradient.addColorStop(signal.signal.position, "rgba(0, 191, 255, 1)"); // Light blue color
+      gradient.addColorStop(Math.max(signal.signal.position - 0.1, 0), "black");
+      gradient.addColorStop(Math.min(signal.signal.position + 0.1, 1), "black");
+      ctx.strokeStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(circle.x, circle.y);
+      ctx.lineTo(neighbor.x, neighbor.y);
+      ctx.stroke();
     }
   }
+};
 
-  const animate = () => {
+const draw = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   for (const circle of circles) {
     circle.updateIntensity(signals);
     circle.draw();
   }
-
   connectCircles(circles, 3, signals);
+};
 
-  signalCount += signals.filter(s => s.signal.position > 0 && s.signal.position < 1).length;
-  if (signalCount >= 243) {
-    resetCircles();
-  }
-
+const animate = () => {
+  draw();
   requestAnimationFrame(animate);
 };
 
-  animate();
+animate();
+
+setInterval(() => {
+  if (signalCount < 5) {
+    signalCount++;
+    resetCircles();
+  }
+}, 5000);
 </script>
 </body>
 </html>
