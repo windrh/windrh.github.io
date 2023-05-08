@@ -155,23 +155,30 @@ const findSameSizeNeighbors = (circle, circles, n) => {
   };
 
   const connectCircles = (circles, n, signals) => {
-    ctx.lineWidth = 2;
-    for (const circle of circles) {
-      const sameSizeNeighbors = findSameSizeNeighbors(circle, circles, n);
-      for (const neighbor of sameSizeNeighbors) {
-        const signal = signals.find(s => s.start === circle && s.end === neighbor) || signals.find(s => s.start === neighbor && s.end === circle);
-        if (!signal) {
-          continue;
-        }
-        signal.signal.update();
-        ctx.strokeStyle = circle.color;
-        ctx.beginPath();
-        ctx.moveTo(circle.x, circle.y);
-        ctx.lineTo(neighbor.x, neighbor.y);
-        ctx.stroke();
+  ctx.lineWidth = 2;
+  for (const circle of circles) {
+    const sameSizeNeighbors = findSameSizeNeighbors(circle, circles, n);
+    for (const neighbor of sameSizeNeighbors) {
+      const signal = signals.find(s => s.start === circle && s.end === neighbor) || signals.find(s => s.start === neighbor && s.end === circle);
+      if (!signal) {
+        continue;
       }
+      signal.signal.update();
+      
+      const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
+      gradient.addColorStop(signal.signal.position, circle.color);
+      gradient.addColorStop(Math.max(signal.signal.position - 0.1, 0), "transparent");
+      gradient.addColorStop(Math.min(signal.signal.position + 0.1, 1), "transparent");
+
+      ctx.strokeStyle = gradient;
+      ctx.beginPath();
+      ctx.moveTo(circle.x, circle.y);
+      ctx.lineTo(neighbor.x, neighbor.y);
+      ctx.stroke();
     }
-  };
+  }
+};
+
   
   const circles = generateCircles(100);
   const signals = [];
