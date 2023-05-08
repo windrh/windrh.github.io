@@ -164,9 +164,9 @@ const findSameSizeNeighbors = (circle, circles, n) => {
         continue;
       }
       signal.signal.update();
-      
+
       const gradient = ctx.createLinearGradient(circle.x, circle.y, neighbor.x, neighbor.y);
-      gradient.addColorStop(signal.signal.position, circle.color);
+      gradient.addColorStop(signal.signal.position, "rgba(0, 191, 255, 1)"); // Light blue color
       gradient.addColorStop(Math.max(signal.signal.position - 0.1, 0), circle.color);
       gradient.addColorStop(Math.min(signal.signal.position + 0.1, 1), circle.color);
 
