@@ -27,6 +27,24 @@
 <div class="overlay"></div>
 <canvas id="circleCanvas"></canvas>
 <script>
+let signalCount = 0;
+let initialCircle = null;
+
+const resetCircles = () => {
+  for (const circle of circles) {
+    circle.resetIntensity();
+  }
+  signals.length = 0;
+  initialCircle = circles[Math.floor(Math.random() * circles.length)];
+  const nearestNeighbors = findNearestNeighbors(initialCircle, circles, 3);
+  for (const neighbor of nearestNeighbors) {
+    const signal = new Signal(0, Math.random() * 0.0025 + 0.0005);
+    signals.push({ start: initialCircle, end: neighbor, signal });
+  }
+  signalCount = 0;
+};
+
+resetCircles();
   class Signal {
   constructor(position, speed) {
     this.position = position;
@@ -59,6 +77,10 @@
   resizeCanvas();
 
   class Circle {
+  resetIntensity() {
+    this.intensity = 0;
+  }
+}
   constructor(x, y, radius, color) {
     this.x = x;
     this.y = y;
@@ -193,6 +215,12 @@
   }
 
   connectCircles(circles, 3, signals);
+
+  signalCount += signals.filter(s => s.signal.position > 0 && s.signal.position < 1).length;
+  if (signalCount >= 243) {
+    resetCircles();
+  }
+
   requestAnimationFrame(animate);
 };
 
