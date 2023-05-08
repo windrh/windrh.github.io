@@ -137,8 +137,8 @@ const findSameSizeNeighbors = (circle, circles, n) => {
         radius = 40;
         color = "rgba(128, 128, 128, 0.7)";
       }
-      const offsetX = (Math.random() * gridSpacing) / 4 - gridSpacing / 8;
-      const offsetY = (Math.random() * gridSpacing) / 4 - gridSpacing / 8;
+      const offsetX = (Math.random() * gridSpacing) - gridSpacing / 2;
+      const offsetY = (Math.random() * gridSpacing) - gridSpacing / 2;
       circles.push(new Circle(x + offsetX, y + offsetY, radius, color));
     }
   }
