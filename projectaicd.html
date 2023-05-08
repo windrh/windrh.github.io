@@ -44,8 +44,6 @@ const resetCircles = () => {
   signalCount = 0;
 };
 
-resetCircles();
-
 class Signal {
   constructor(position, speed) {
     this.position = position;
@@ -218,7 +216,7 @@ setInterval(() => {
   
 const circles = generateCircles(50);
 const signals = [];
-
+resetCircles();
 </script>
 </body>
 </html>
